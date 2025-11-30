@@ -163,6 +163,15 @@ function lumiere() {
 
     const haloColors = ['#ffeaa7','#fab1a0','#74b9ff','#a29bfe','#81ecec','#fd79a8'];
 
+ function lumiere() {
+    if (lumiereInterval) {
+        clearInterval(lumiereInterval);
+        lumiereInterval = null;
+        return;
+    }
+
+    const haloColors = ['#ffeaa7','#fab1a0','#74b9ff','#a29bfe','#81ecec','#fd79a8'];
+
     lumiereInterval = setInterval(() => {
         const rect = bookContainer.getBoundingClientRect();
         const particle = document.createElement('div');
@@ -186,7 +195,6 @@ function lumiere() {
         const endX = startX + Math.cos(angle) * distance;
         const endY = startY + Math.sin(angle) * distance;
 
-        // Aqui aplicamos as variáveis CSS para animação
         particle.style.setProperty('--dx', `${endX - startX}px`);
         particle.style.setProperty('--dy', `${endY - startY}px`);
 
@@ -196,5 +204,7 @@ function lumiere() {
         document.body.appendChild(particle);
         setTimeout(() => particle.remove(), duration * 1000);
     }, 50);
+}
+
 
 }
