@@ -1,53 +1,154 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Le Grimoire Magique Interactif</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <div class="stars-container">
-        <div class="stars-layer layer-1"></div>
-        <div class="stars-layer layer-2"></div>
-        <div class="stars-layer layer-3"></div>
-    </div>
-    <div class="library-bg"></div>
+// =========================================
+// 📚 VARIÁVEIS GLOBAIS
+// =========================================
+const bookContainer = document.getElementById('bookContainer');
+const fireContainer = document.getElementById('fireContainer');
+const body = document.body;
 
-    <audio id="soundPage" src="page.mp3" preload="auto"></audio>
+let isOpen = false;
+let particleInterval;
+let magicTimeout;
+let fireActive = false;
 
-    <div class="controls">
-        <button id="themeBtn" onclick="toggleTheme()">Changer d'ambiance</button>
-        <button onclick="flyPages()">Faire voler les pages</button>
-        <button onclick="toggleFire()">Feu</button>
-    </div>
+// Cores mágicas para partículas
+const colors = ['#ffd700', '#ff9a9e', '#a18cd1', '#ffffff', '#84fab0'];
 
-    <div class="book-container" id="bookContainer">
-        <div class="book">
-            <div class="page back-cover"></div>
-            <div class="spine"></div>
-            <div class="page inner-page p3">
-                <div class="page-content"><p>...et la magie commence.</p></div>
-            </div>
-            <div class="page inner-page p2"></div>
-            <div class="page inner-page p1"></div>
-            <div class="page front-cover">
-                <div class="cover-content">
-                    <h1>Le Grimoire</h1>
-                    <div class="ornament"></div>
-                </div>
-            </div>
-        </div>
-    </div>
+// =========================================
+// 🔊 FUNÇÕES DE ÁUDIO E TEMA
+// =========================================
+function playSound(audioId){
+    const audio = document.getElementById(audioId);
+    if(audio){
+        audio.currentTime = 0;
+        audio.play().catch(e => console.log("Erro de áudio:", e));
+    }
+}
 
-    <!-- 🔥 Contêiner de fogo posicionado fora do livro -->
-    <div class="fire-container" id="fireContainer">
-        <div class="flame red-flame"></div>
-        <div class="flame orange-flame"></div>
-        <div class="flame yellow-flame"></div>
-        <div class="flame white-flame"></div>
-    </div>
+function toggleTheme(){
+    body.classList.toggle('dark-mode');
+    body.style.transition = 'background 1.5s ease, color 1.5s ease';
+    setTimeout(()=>{body.style.transition='';},1600);
+}
 
-    <script src="script.js"></script>
-</body>
-</html>
+// =========================================
+// 📖 FUNÇÕES DO LIVRO E PÁGINAS
+// =========================================
+function toggleBook(){
+    // Não permite fechar se o fogo estiver ativo
+    if(fireActive && isOpen) return;
+
+    isOpen = !isOpen;
+    if(isOpen){
+        bookContainer.classList.add('open');
+        setTimeout(()=>playSound('soundPage'),300);
+        setTimeout(()=>playSound('soundPage'),500);
+        setTimeout(()=>playSound('soundPage'),700);
+        magicTimeout = setTimeout(startMagic,500);
+    } else {
+        bookContainer.classList.remove('open');
+        clearTimeout(magicTimeout);
+        stopMagic();
+        if(fireActive) stopFire();
+    }
+}
+
+function flyPages(){
+    const pages = document.querySelectorAll('.page:not(.front-cover):not(.back-cover)');
+    pages.forEach((page,i)=>{
+        setTimeout(()=>{
+            const flyingPage = page.cloneNode(true);
+            const rect = page.getBoundingClientRect();
+            flyingPage.style.position='absolute';
+            flyingPage.style.left=`${rect.left}px`;
+            flyingPage.style.top=`${rect.top}px`;
+            flyingPage.style.width=`${rect.width}px`;
+            flyingPage.style.height=`${rect.height}px`;
+            flyingPage.style.zIndex=1000;
+            flyingPage.style.pointerEvents='none';
+            flyingPage.style.transition='transform 4s ease-out, opacity 4s ease-out';
+            document.body.appendChild(flyingPage);
+
+            const endX = (Math.random()-0.5)*window.innerWidth*2;
+            const endY = (Math.random()-0.5)*window.innerHeight*2;
+            const rotateX = (Math.random()-0.5)*1080;
+            const rotateY = (Math.random()-0.5)*1080;
+
+            requestAnimationFrame(()=>{
+                flyingPage.style.transform = `translate(${endX}px,${endY}px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+                flyingPage.style.opacity=0;
+            });
+
+            setTimeout(()=>flyingPage.remove(),4000);
+        }, i*100);
+    });
+}
+
+// =========================================
+// ✨ FUNÇÕES DE PARTÍCULAS
+// =========================================
+function createParticle(){
+    if(!isOpen) return;
+    const particle = document.createElement('div');
+    particle.classList.add('particle');
+    const size = Math.random()*12+4;
+    particle.style.width=`${size}px`;
+    particle.style.height=`${size}px`;
+    const currentColors = body.classList.contains('dark-mode')?['#fff','#cfcfcf','#a0a0ff','#ffd700','#e0e0ff']:colors;
+    const color = currentColors[Math.floor(Math.random()*currentColors.length)];
+    particle.style.background=color;
+    particle.style.boxShadow=`0 0 ${size*3}px ${color}`;
+    const rect = bookContainer.getBoundingClientRect();
+    particle.style.left=`${rect.left+rect.width/2}px`;
+    particle.style.top=`${rect.top+rect.height/2}px`;
+    const tx=(Math.random()-0.5)*120;
+    const txEnd=(Math.random()-0.5)*700;
+    particle.style.setProperty('--tx',`${tx}px`);
+    particle.style.setProperty('--tx-end',`${txEnd}px`);
+    const duration = Math.random()*2+2;
+    particle.style.animation=`floatUp ${duration}s ease-out forwards`;
+    document.body.appendChild(particle);
+    setTimeout(()=>particle.remove(),duration*1000);
+}
+
+function startMagic(){
+    stopMagic();
+    for(let i=0;i<50;i++) setTimeout(createParticle,i*25);
+    particleInterval=setInterval(createParticle,25);
+}
+
+function stopMagic(){
+    if(particleInterval) clearInterval(particleInterval);
+    particleInterval=null;
+}
+
+// =========================================
+// 🔥 FUNÇÕES DE FOGO
+// =========================================
+function startFire(){
+    if(fireActive) return;
+    fireActive=true;
+
+    // Abrir livro se fechado
+    if(!isOpen){
+        bookContainer.classList.add('open');
+        isOpen=true;
+    }
+
+    // Ativar fogo
+    fireContainer.classList.add('active');
+    bookContainer.classList.add('fire-active');
+
+    // Parar partículas normais
+    stopMagic();
+}
+
+function stopFire(){
+    fireActive=false;
+    fireContainer.classList.remove('active');
+    bookContainer.classList.remove('fire-active');
+}
+
+function toggleFire(){
+    if(fireActive) stopFire();
+    else startFire();
+}
