@@ -137,33 +137,48 @@ function resetBook(){
     stopFire();
 }
 
-// LUMIERE
-function lumiere(){
-    if(lumiereInterval){ clearInterval(lumiereInterval); lumiereInterval=null; return; }
-    const haloColors=['#ffeaa7','#fab1a0','#74b9ff','#a29bfe','#81ecec','#fd79a8'];
-    lumiereInterval=setInterval(()=>{
-        const rect=bookContainer.getBoundingClientRect();
-        const particle=document.createElement('div');
+// LUMIERE - halo mágico
+function lumiere() {
+    if (lumiereInterval) {
+        clearInterval(lumiereInterval);
+        lumiereInterval = null;
+        return;
+    }
+
+    const haloColors = ['#ffeaa7','#fab1a0','#74b9ff','#a29bfe','#81ecec','#fd79a8'];
+
+    lumiereInterval = setInterval(() => {
+        const rect = bookContainer.getBoundingClientRect();
+        const particle = document.createElement('div');
         particle.classList.add('lumiere-particle');
-        const size=Math.random()*20+20;
-        particle.style.width=`${size}px`;
-        particle.style.height=`${size}px`;
-        const color=haloColors[Math.floor(Math.random()*haloColors.length)];
-        particle.style.background=color;
-        particle.style.boxShadow=`0 0 ${size*2}px ${color}, 0 0 ${size*4}px ${color}`;
-        const startX=rect.left+rect.width/2;
-        const startY=rect.top+rect.height/2;
-        particle.style.left=`${startX}px`;
-        particle.style.top=`${startY}px`;
-        const angle=Math.random()*2*Math.PI;
-        const distance=Math.random()*300+200;
-        const endX=startX+Math.cos(angle)*distance;
-        const endY=startY+Math.sin(angle)*distance;
-        particle.style.setProperty('--dx',`${endX-startX}px`);
-        particle.style.setProperty('--dy',`${endY-startY}px`);
-        const duration=Math.random()*2+2;
-        particle.style.animation=`lumiereMove ${duration}s ease-out forwards`;
+
+        const size = Math.random() * 20 + 20;
+        particle.style.width = `${size}px`;
+        particle.style.height = `${size}px`;
+
+        const color = haloColors[Math.floor(Math.random() * haloColors.length)];
+        particle.style.background = color;
+        particle.style.boxShadow = `0 0 ${size*2}px ${color}, 0 0 ${size*4}px ${color}`;
+
+        const startX = rect.left + rect.width / 2;
+        const startY = rect.top + rect.height / 2;
+        particle.style.left = `${startX}px`;
+        particle.style.top = `${startY}px`;
+
+        const angle = Math.random() * 2 * Math.PI;
+        const distance = Math.random() * 300 + 200;
+        const endX = startX + Math.cos(angle) * distance;
+        const endY = startY + Math.sin(angle) * distance;
+
+        // Aqui aplicamos as variáveis CSS para animação
+        particle.style.setProperty('--dx', `${endX - startX}px`);
+        particle.style.setProperty('--dy', `${endY - startY}px`);
+
+        const duration = Math.random() * 2 + 2;
+        particle.style.animation = `lumiereMove ${duration}s ease-out forwards`;
+
         document.body.appendChild(particle);
-        setTimeout(()=>particle.remove(),duration*1000);
-    },50);
+        setTimeout(() => particle.remove(), duration * 1000);
+    }, 50);
+
 }
