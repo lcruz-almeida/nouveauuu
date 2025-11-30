@@ -128,6 +128,7 @@ function rainbowParticles(){
 function shakeBook(){
     bookContainer.classList.add('shake');
     setTimeout(()=>bookContainer.classList.remove('shake'),500);
+
 }
 
 function resetBook() {
@@ -147,9 +148,8 @@ function resetBook() {
         lumiereInterval = null;
     }
 
-    // Remove partículas que ainda estão no corpo
+    // Remove todas as partículas do DOM (partículas mágicas, fogo, halo)
     document.querySelectorAll('.particle, .fire, .lumiere-particle').forEach(el => el.remove());
-}
 
 }
 
