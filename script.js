@@ -1,52 +1,31 @@
-// =========================================
-// 📚 LIGAÇÃO E VARIÁVEIS GLOBAIS
-// =========================================
-
 const bookContainer = document.getElementById('bookContainer');
-const fireContainer = document.getElementById('fireContainer'); 
+const fireContainer = document.getElementById('fireContainer');
 const body = document.body;
 
 let isOpen = false;
 let particleInterval;
 let magicTimeout;
-let fireActive = false; 
+let fireActive = false;
 
-// Cores mágicas para partículas
 const colors = ['#ffd700', '#ff9a9e', '#a18cd1', '#ffffff', '#84fab0'];
-
-// =========================================
-// 🔊 FUNÇÕES DE ÁUDIO E TEMA
-// =========================================
 
 function playSound(audioId) {
     const audio = document.getElementById(audioId);
-    if (audio) {
-        audio.currentTime = 0;
-        audio.play().catch(e => console.log("Erro de áudio: " + e));
-    }
+    if (audio) { audio.currentTime = 0; audio.play().catch(e => console.log(e)); }
 }
 
 function toggleTheme() {
     body.classList.toggle('dark-mode');
     body.style.transition = 'background 1.5s ease, color 1.5s ease';
-    setTimeout(() => {
-        body.style.transition = '';
-    }, 1600);
+    setTimeout(() => { body.style.transition = ''; }, 1600);
 }
 
-// =========================================
-// 📖 FUNÇÕES DO LIVRO E PÁGINAS
-// =========================================
-
 function toggleBook() {
-    // Não permite fechar o livro manualmente se o fogo estiver ativo
-    if (fireActive && isOpen) return; 
-
+    if (fireActive && isOpen) return; // bloqueia fechamento do livro com fogo
     isOpen = !isOpen;
     if (isOpen) {
         bookContainer.classList.add('open');
         const pageTurnDelay = 200;
-        // Sons de virar página
         setTimeout(() => playSound('soundPage'), 300);
         setTimeout(() => playSound('soundPage'), 300 + pageTurnDelay);
         setTimeout(() => playSound('soundPage'), 300 + 2 * pageTurnDelay);
@@ -55,8 +34,7 @@ function toggleBook() {
         bookContainer.classList.remove('open');
         clearTimeout(magicTimeout);
         stopMagic();
-        // Se fechar o livro, desliga o fogo por segurança
-        if (fireActive) stopFire(); 
+        if (fireActive) stopFire();
     }
 }
 
@@ -75,25 +53,18 @@ function flyPages() {
             flyingPage.style.pointerEvents = 'none';
             flyingPage.style.transition = 'transform 4s ease-out, opacity 4s ease-out';
             document.body.appendChild(flyingPage);
-
             const endX = (Math.random() - 0.5) * window.innerWidth * 2;
             const endY = (Math.random() - 0.5) * window.innerHeight * 2;
             const rotateX = (Math.random() - 0.5) * 1080;
             const rotateY = (Math.random() - 0.5) * 1080;
-
             requestAnimationFrame(() => {
                 flyingPage.style.transform = `translate(${endX}px, ${endY}px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
                 flyingPage.style.opacity = 0;
             });
-
             setTimeout(() => flyingPage.remove(), 4000);
         }, i * 100);
     });
 }
-
-// =========================================
-// ✨ FUNÇÕES DE PARTÍCULAS (MANTIDAS)
-// =========================================
 
 function createParticle() {
     if (!isOpen) return;
@@ -105,79 +76,34 @@ function createParticle() {
     let currentColors = body.classList.contains('dark-mode') ? ['#ffffff', '#cfcfcf', '#a0a0ff', '#ffd700', '#e0e0ff'] : colors;
     const color = currentColors[Math.floor(Math.random() * currentColors.length)];
     particle.style.background = color;
-    particle.style.boxShadow = `0 0 ${size * 3}px ${color}`;
+    particle.style.boxShadow = `0 0 ${size*3}px ${color}`;
     const rect = bookContainer.getBoundingClientRect();
-    const startX = rect.left + rect.width / 2;
-    const startY = rect.top + rect.height / 2;
-    particle.style.left = `${startX}px`;
-    particle.style.top = `${startY}px`;
-    const tx = (Math.random() - 0.5) * 120;
-    const txEnd = (Math.random() - 0.5) * 700;
+    particle.style.left = `${rect.left + rect.width/2}px`;
+    particle.style.top = `${rect.top + rect.height/2}px`;
+    const tx = (Math.random()-0.5)*120;
+    const txEnd = (Math.random()-0.5)*700;
     particle.style.setProperty('--tx', `${tx}px`);
     particle.style.setProperty('--tx-end', `${txEnd}px`);
-    const duration = Math.random() * 2 + 2;
+    const duration = Math.random()*2+2;
     particle.style.animation = `floatUp ${duration}s ease-out forwards`;
     document.body.appendChild(particle);
-    setTimeout(() => particle.remove(), duration * 1000);
+    setTimeout(() => particle.remove(), duration*1000);
 }
 
-function startMagic() {
-    stopMagic(); 
-    for(let i = 0; i < 50; i++) setTimeout(createParticle, i * 25);
-    particleInterval = setInterval(createParticle, 25);
-}
-
-function stopMagic() {
-    if (particleInterval) clearInterval(particleInterval);
-    particleInterval = null; 
-}
-
-
-// =========================================
-// 🔥 FUNÇÕES DE FOGO (Lógica Final)
-// =========================================
+function startMagic() { stopMagic(); for(let i=0;i<50;i++) setTimeout(createParticle,i*25); particleInterval = setInterval(createParticle,25);}
+function stopMagic() { if(particleInterval) clearInterval(particleInterval); particleInterval=null;}
 
 function startFire() {
-    if (fireActive) return;
-    
+    if(fireActive) return;
     fireActive = true;
-    
-    // 1. Abrir o livro se estiver fechado, para mostrar a chama
-    if (!isOpen) {
-        bookContainer.classList.add('open'); 
-        isOpen = true; 
-    }
-    
-    // 2. Ativar a animação da chama (torna-a visível)
-    if (fireContainer) {
-        fireContainer.classList.add('active');
-    }
-    bookContainer.classList.add('fire-active'); 
-    
-    // 3. Desligar partículas
-    stopMagic(); 
+    if(!isOpen) { bookContainer.classList.add('open'); isOpen = true; }
+    if(fireContainer) fireContainer.classList.add('active');
+    bookContainer.classList.add('fire-active');
+    stopMagic();
 }
 
 function stopFire() {
     fireActive = false;
-    
-    // Desativar a animação da chama (torna-a invisível)
-    if (fireContainer) {
-        fireContainer.classList.remove('active');
-    }
+    if(fireContainer) fireContainer.classList.remove('active');
     bookContainer.classList.remove('fire-active');
-    
-    // Fechar o livro
-    if (isOpen) {
-        bookContainer.classList.remove('open');
-        isOpen = false;
-    }
-}
-
-function toggleFire() {
-    if (fireActive) {
-        stopFire();
-    } else {
-        startFire();
-    }
-}
+    if(isOpen) { bookContainer.classList.remove('open'); is
