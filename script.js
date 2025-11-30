@@ -79,14 +79,14 @@ function createParticle() {
 }
 
 function startMagic() {
-    stopMagic(); // Parar qualquer magia anterior antes de iniciar nova
+    stopMagic(); 
     for(let i = 0; i < 50; i++) setTimeout(createParticle, i * 25);
     particleInterval = setInterval(createParticle, 25);
 }
 
 function stopMagic() {
     if (particleInterval) clearInterval(particleInterval);
-    particleInterval = null; // Resetar para evitar múltiplas execuções
+    particleInterval = null; 
 }
 
 // FAZER AS PÁGINAS VOAREM PELO ECRÃ
@@ -128,7 +128,7 @@ function flyPages() {
 // ==========================
 
 function startFire() {
-    if (fireActive) return; // Não fazer nada se o fogo já estiver ativo
+    if (fireActive) return;
     
     fireActive = true;
     
@@ -138,24 +138,23 @@ function startFire() {
         isOpen = true;
     }
     
-    // 2. Ativar a animação da chama
+    // 2. Ativar a animação da chama e o efeito de calor
     fireContainer.classList.add('active');
-    bookContainer.classList.add('fire-active'); // Adiciona classe para z-index/estilo do livro
+    bookContainer.classList.add('fire-active'); 
     
-    // 3. (Opcional: Desligar as partículas mágicas para focar no fogo)
+    // 3. Desligar as partículas mágicas para focar no fogo
     stopMagic(); 
 }
 
 function stopFire() {
     fireActive = false;
     
-    // Desativar a animação da chama
+    // Desativar a animação da chama e o efeito de calor
     fireContainer.classList.remove('active');
     bookContainer.classList.remove('fire-active');
     
-    // Fechar o livro se ele só foi aberto por causa do fogo
-    // (Pode ajustar esta lógica se quiser que o livro permaneça aberto)
-    if (isOpen) { // Basicamente, simula o toggleBook para fechar
+    // Fechar o livro
+    if (isOpen) { 
         toggleBook(); 
     }
 }
