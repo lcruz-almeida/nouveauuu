@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Interactive Magical Book</title>
-    <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Le Grimoire Magique Interactif</title>
+    <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
@@ -19,9 +19,10 @@
     <audio id="soundPage" src="page.mp3" preload="auto"></audio>
 
     <div class="controls">
-        <button onclick="toggleTheme()">✨ Change Theme</button>
+        <button id="themeBtn" onclick="toggleTheme()">Changer d'ambiance</button>
         <button onclick="flyPages()">Faire voler les pages</button>
-        <button onclick="toggleFire()">🔥 Fire</button>
+        <!-- botão de fogo já existente - mantém-se -->
+        <button id="fireBtn" onclick="toggleFire()">Feu</button>
     </div>
 
     <div class="book-container" id="bookContainer" onclick="toggleBook()">
@@ -29,15 +30,23 @@
             <div class="page back-cover"></div>
             <div class="spine"></div>
 
-            <div class="page inner-page p3"></div>
+            <div class="page inner-page p3">
+                <div class="page-content">
+                    <p>...et la magie commence.</p>
+                </div>
+            </div>
             <div class="page inner-page p2"></div>
             <div class="page inner-page p1"></div>
 
             <div class="page front-cover">
                 <div class="cover-content">
-                    <h1>Magical Book</h1>
+                    <h1>Le Grimoire</h1>
+                    <div class="ornament"></div>
                 </div>
             </div>
+
+            <!-- recipiente onde a chama principal aparece (manter dentro do livro) -->
+            <div class="flame-holder" id="flameHolder" aria-hidden="true"></div>
         </div>
     </div>
 
