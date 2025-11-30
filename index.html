@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Magical Book</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="stars-container">
+        <div class="stars-layer layer-1"></div>
+        <div class="stars-layer layer-2"></div>
+        <div class="stars-layer layer-3"></div>
+    </div>
+
+    <div class="library-bg"></div>
+
+    <audio id="soundPage" src="page.mp3" preload="auto"></audio>
+
+    <div class="controls">
+        <button id="flyBtn">Faire voler les pages</button>
+        <button id="fireBtn">🔥 Feu</button>
+        <button id="themeBtn" onclick="toggleTheme()">✨ Changer d'ambiance</button>
+    </div>
+
+    <div class="book-container" id="bookContainer">
+        <div class="book">
+            <div class="page back-cover"></div>
+            <div class="spine"></div>
+
+            <div class="page inner-page p3"></div>
+            <div class="page inner-page p2"></div>
+            <div class="page inner-page p1"></div>
+
+            <div class="page front-cover">
+                <div class="cover-content">
+                    <h1>Le Grimoire</h1>
+                    <div class="ornament"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
