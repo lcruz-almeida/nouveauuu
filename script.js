@@ -153,26 +153,7 @@ function resetBook() {
 
 }
 
-// LUMIERE - halo mágico
 function lumiere() {
-    if (lumiereInterval) {
-        clearInterval(lumiereInterval);
-        lumiereInterval = null;
-        return;
-    }
-
-    const haloColors = ['#ffeaa7','#fab1a0','#74b9ff','#a29bfe','#81ecec','#fd79a8'];
-
- function lumiere() {
-    if (lumiereInterval) {
-        clearInterval(lumiereInterval);
-        lumiereInterval = null;
-        return;
-    }
-
-    const haloColors = ['#ffeaa7','#fab1a0','#74b9ff','#a29bfe','#81ecec','#fd79a8'];
-
-   function lumiere() {
     if (lumiereInterval) {
         clearInterval(lumiereInterval);
         lumiereInterval = null;
@@ -213,6 +194,7 @@ function lumiere() {
         document.body.appendChild(particle);
         setTimeout(() => particle.remove(), duration * 1000);
     }, 50);
+}
 
 
 }
