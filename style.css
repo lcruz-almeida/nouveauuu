@@ -112,7 +112,7 @@ body:not(.dark-mode) .stars-container {
 .controls {
     position: absolute;
     top: 30px;
-    z-index: 250; /* Aumentado para estar à frente do fogo (z-index 200) */
+    z-index: 250; /* À frente do fogo (z-index 500) */
     display: flex;
     gap: 15px;
 }
@@ -147,7 +147,7 @@ button:hover {
 }
 
 .book-container.open {
-    transform: translateX(160px);
+    /* transform: translateX(160px); REMOVIDO PARA MANTER O FOGO CENTRADO */
 }
 
 .book {
@@ -287,23 +287,21 @@ button:hover {
  * =========================================
  */
 
-/* 1. Contêiner Principal - Adaptação do .flame-box */
+/* 1. Contêiner Principal do Fogo */
 .fire-container {
-    /* Regras de Posicionamento para o Livro */
     position: absolute;
-    top: -80px; /* Mais alto */
-    left: 50%; /* Centrado */
+    top: -80px; 
+    left: 50%; 
     transform: translate(-50%, 0); 
     
-    z-index: 200; /* MUITO ALTO para estar à frente de TUDO */
+    z-index: 500; /* CRÍTICO: MUITO ALTO para estar à frente de TUDO */
     
     pointer-events: none;
     opacity: 0; 
     transition: opacity 0.8s ease-in-out; 
 
-    /* Regras do Fogo Enviado (Aumentadas) */
-    height: 120px; /* Maior */
-    width: 120px; /* Maior */
+    height: 120px; 
+    width: 120px; 
     transform-origin: center bottom;
     animation: flicker 3ms 200ms ease-in infinite alternate;
 }
@@ -323,7 +321,7 @@ button:hover {
     transform: rotate(-45deg) scale(1.5, 1.5);
 }
 
-/* 3. Camadas de Cor (Ajustadas para centrar no novo tamanho de 120x120px) */
+/* 3. Camadas de Cor (Ajustadas para centrar no novo tamanho) */
 .yellow-flame {
     height: 45px; 
     width: 45px;
