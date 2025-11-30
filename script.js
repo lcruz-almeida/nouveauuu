@@ -130,11 +130,27 @@ function shakeBook(){
     setTimeout(()=>bookContainer.classList.remove('shake'),500);
 }
 
-function resetBook(){
-    isOpen=false;
+function resetBook() {
+    // Fecha o livro
+    isOpen = false;
     bookContainer.classList.remove('open');
+
+    // Para partículas mágicas
     stopMagic();
+
+    // Para fogo
     stopFire();
+
+    // Para o halo Lumière
+    if (lumiereInterval) {
+        clearInterval(lumiereInterval);
+        lumiereInterval = null;
+    }
+
+    // Remove partículas que ainda estão no corpo
+    document.querySelectorAll('.particle, .fire, .lumiere-particle').forEach(el => el.remove());
+}
+
 }
 
 // LUMIERE - halo mágico
