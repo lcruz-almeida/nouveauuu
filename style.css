@@ -267,3 +267,5 @@ button:hover { background: var(--gold); color: #000; transform: scale(1.05); }
     50% { opacity: 1; transform: translate(var(--dx), var(--dy)) scale(1.2); }
     100% { transform: translate(var(--dx), var(--dy)) scale(0); opacity: 0; }
 }
+
+}
