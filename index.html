@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Interactive Magical Book</title>
+    <title>Le Grimoire Magique Interactif</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -19,17 +19,21 @@
     <audio id="soundPage" src="page.mp3" preload="auto"></audio>
 
     <div class="controls">
-        <button id="flyBtn">Faire voler les pages</button>
-        <button id="fireBtn">🔥 Feu</button>
-        <button id="themeBtn" onclick="toggleTheme()">✨ Changer d'ambiance</button>
+        <button id="themeBtn" onclick="toggleTheme()">Changer d'ambiance</button>
+        <button onclick="flyPages()">Faire voler les pages</button>
+        <button onclick="toggleFire()">Feu 🔥</button>
     </div>
 
-    <div class="book-container" id="bookContainer">
+    <div class="book-container" id="bookContainer" onclick="toggleBook()">
         <div class="book">
             <div class="page back-cover"></div>
             <div class="spine"></div>
 
-            <div class="page inner-page p3"></div>
+            <div class="page inner-page p3">
+                <div class="page-content">
+                    <p>...et la magie commence.</p>
+                </div>
+            </div>
             <div class="page inner-page p2"></div>
             <div class="page inner-page p1"></div>
 
