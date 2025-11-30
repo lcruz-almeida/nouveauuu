@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Le Grimoire Magique Interactif</title>
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
@@ -20,12 +20,17 @@
 
     <div class="controls">
         <button id="themeBtn" onclick="toggleTheme()">Changer d'ambiance</button>
+        
         <button onclick="flyPages()">Faire voler les pages</button>
-        <!-- botão de fogo já existente - mantém-se -->
-        <button id="fireBtn" onclick="toggleFire()">Feu</button>
+
+        <button onclick="toggleFire()">Feu</button>
     </div>
 
     <div class="book-container" id="bookContainer" onclick="toggleBook()">
+
+        <!-- 🔥 ESTE CONTAINER É O NOVO LOCAL ONDE O FOGO APARECE -->
+        <div class="fire-container"></div>
+
         <div class="book">
             <div class="page back-cover"></div>
             <div class="spine"></div>
@@ -35,6 +40,7 @@
                     <p>...et la magie commence.</p>
                 </div>
             </div>
+
             <div class="page inner-page p2"></div>
             <div class="page inner-page p1"></div>
 
@@ -45,8 +51,6 @@
                 </div>
             </div>
 
-            <!-- recipiente onde a chama principal aparece (manter dentro do livro) -->
-            <div class="flame-holder" id="flameHolder" aria-hidden="true"></div>
         </div>
     </div>
 
