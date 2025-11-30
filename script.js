@@ -142,13 +142,13 @@ function resetBook() {
     // Para fogo
     stopFire();
 
-    // Para o halo Lumière
+    // Para halo Lumière
     if (lumiereInterval) {
         clearInterval(lumiereInterval);
         lumiereInterval = null;
     }
 
-    // Remove todas as partículas do DOM (partículas mágicas, fogo, halo)
+    // Remove todas as partículas visíveis
     document.querySelectorAll('.particle, .fire, .lumiere-particle').forEach(el => el.remove());
 
 }
