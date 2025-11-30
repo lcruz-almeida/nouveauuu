@@ -29,7 +29,7 @@ body {
     background: #000;
     font-family: 'Georgia', serif;
     overflow: hidden;
-    perspective: 2000px; /* Para efeitos 3D */
+    perspective: 2000px;
 }
 
 .library-bg {
@@ -111,8 +111,8 @@ body:not(.dark-mode) .stars-container {
     position: absolute;
     top: 30px;
     z-index: 100;
-    display: flex; /* Para alinhar botões horizontalmente */
-    gap: 15px; /* Espaço entre os botões */
+    display: flex;
+    gap: 15px;
 }
 
 button {
@@ -139,12 +139,12 @@ button:hover {
     width: 320px;
     height: 460px;
     transform-style: preserve-3d;
-    cursor: pointer; /* Adicionado de volta para a interação geral do livro */
+    cursor: pointer;
     transition: transform 1.2s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 .book-container.open {
-    transform: translateX(160px); /* Move o livro para a direita para abrir */
+    transform: translateX(160px);
 }
 
 .book {
@@ -176,7 +176,7 @@ button:hover {
 
 .front-cover {
     background: var(--book-color);
-    z-index: 20; /* Garante que a capa frontal esteja visível */
+    z-index: 20; 
     display: flex;
     justify-content: center;
     align-items: center;
@@ -195,7 +195,7 @@ button:hover {
 .back-cover {
     background: var(--book-color);
     z-index: 0;
-    transform: translateZ(-30px); /* Move a capa traseira para trás */
+    transform: translateZ(-30px);
     box-shadow: 20px 20px 60px rgba(0,0,0,0.5);
     transition: background-color 1s;
 }
@@ -206,10 +206,10 @@ button:hover {
     left: 0;
     width: 30px;
     height: 100%;
-    background: #3e2723; /* Cor da lombada */
+    background: #3e2723;
     transform: rotateY(-90deg) translateX(-15px);
     transform-origin: left;
-    z-index: 10; /* A coluna deve estar por trás do fogo */
+    z-index: 10; 
 }
 
 .p1 { z-index: 15; }
@@ -227,7 +227,7 @@ button:hover {
 /* Animação de abertura do livro */
 .book-container.open .front-cover {
     transform: rotateY(-180deg);
-    transition-delay: 0s; /* Capa frontal vira primeiro */
+    transition-delay: 0s;
 }
 .book-container.open .p1 {
     transform: rotateY(-170deg);
@@ -238,9 +238,9 @@ button:hover {
     transition-delay: 0.3s;
 }
 .book-container.open .p3 {
-    transform: rotateY(-10deg); /* Esta página fica quase reta */
+    transform: rotateY(-10deg);
     transition-delay: 0.5s;
-    background: linear-gradient(to right, #ddd, var(--page-color) 10%); /* Efeito de sombra ao virar */
+    background: linear-gradient(to right, #ddd, var(--page-color) 10%);
     border-left: none;
 }
 
@@ -249,7 +249,7 @@ button:hover {
     position: absolute;
     transform-origin: center;
     animation: flyPage 3s ease-out forwards;
-    z-index: 1000; /* Alto z-index para páginas a voar */
+    z-index: 1000;
 }
 
 @keyframes flyPage {
@@ -266,7 +266,7 @@ button:hover {
     border-radius: 50%;
     pointer-events: none;
     z-index: 999;
-    mix-blend-mode: screen; /* Para um efeito de brilho */
+    mix-blend-mode: screen;
     will-change: transform, opacity;
 }
 
@@ -279,24 +279,23 @@ button:hover {
 
 /*
  * =========================================
- * 🔥 FOGO MÁGICO (CHAMA ESTILIZADA)
+ * 🔥 FOGO MÁGICO (CHAMA ESTILIZADA) - CORREÇÕES APLICADAS
  * =========================================
  */
 
-/* Posicionar o contêiner do fogo no centro do livro */
+/* Posição da chama no centro do livro aberto */
 .fire-container {
     position: absolute;
-    /* Ajustado para subir um pouco do centro, entre as páginas */
-    bottom: 50%; 
+    /* bottom: 0; move para a base do contêiner do livro, alinhado com a lombada */
+    bottom: 0; 
     left: 50%;
     transform: translate(-50%, 0);
-    width: 80px; /* Aumentado ligeiramente para um fogo maior */
-    height: 80px;
+    width: 80px; 
+    height: 100px; /* Altura aumentada para garantir visibilidade */
     z-index: 50; /* Z-index alto para estar à frente das páginas */
     pointer-events: none;
-    opacity: 0; /* Começa invisível */
+    opacity: 0; 
     transition: opacity 0.5s ease;
-    /* Brilho laranja forte para o efeito mágico */
     filter: drop-shadow(0 0 15px rgba(255, 100, 0, 0.9)) drop-shadow(0 0 5px rgba(255, 200, 0, 0.7)); 
 }
 
@@ -312,28 +311,27 @@ button:hover {
     left: 50%;
     width: 20px;
     height: 20px;
-    background: #ff7f00; /* Laranja de fogo */
-    border-radius: 50% 50% 50% 50%; /* Forma arredondada de lágrima */
-    transform: translateX(-50%) rotate(45deg); /* Rotaciona para dar forma de chama */
+    background: #ff7f00; 
+    border-radius: 50% 50% 50% 50%;
+    transform: translateX(-50%) rotate(45deg); 
     opacity: 0.8;
-    /* Combina flicker e subida */
     animation: flame-flicker 1.2s infinite alternate, flame-rise 1.5s infinite ease-out;
 }
 
-/* Variações de cor e tamanho para o efeito 3D (para parecer uma chama complexa) */
+/* Variações de cor e tamanho (para o efeito 3D) */
 .fire-flame:nth-child(1) {
     width: 25px;
     height: 25px;
-    background: #ffa500; /* Laranja mais claro */
+    background: #ffa500; 
     animation-delay: 0s;
     opacity: 0.9;
-    z-index: 2; /* Controla a sobreposição para efeito 3D */
+    z-index: 2; 
 }
 
 .fire-flame:nth-child(2) {
     width: 22px;
     height: 22px;
-    background: #ff4500; /* Laranja avermelhado */
+    background: #ff4500; 
     animation-delay: 0.4s;
     opacity: 0.7;
     z-index: 1;
@@ -342,7 +340,7 @@ button:hover {
 .fire-flame:nth-child(3) {
     width: 18px;
     height: 18px;
-    background: #ffc25f; /* Amarelo (centro, mais quente) */
+    background: #ffc25f; 
     animation-delay: 0.8s;
     opacity: 1;
     z-index: 3;
@@ -351,7 +349,7 @@ button:hover {
 .fire-flame:nth-child(4) {
     width: 30px;
     height: 30px;
-    background: #ff5e00; /* Chama mais externa e escura */
+    background: #ff5e00; 
     animation-delay: 1.2s;
     opacity: 0.5;
     z-index: 0;
@@ -373,15 +371,15 @@ button:hover {
     }
 }
 
-/* Animação: Fogo a subir */
+/* Animação: Fogo a subir (Ajustado para subir mais) */
 @keyframes flame-rise {
     0% {
         transform: translate(-50%, 0) rotate(45deg);
         height: 20px;
     }
     50% {
-        transform: translate(-50%, -15px) rotate(45deg); /* Sobe mais */
-        height: 40px;
+        transform: translate(-50%, -40px) rotate(45deg);
+        height: 50px;
     }
     100% {
         transform: translate(-50%, 0) rotate(45deg);
@@ -391,14 +389,5 @@ button:hover {
 
 /* Efeito de calor e luz no livro (quando o fogo está ativo) */
 .book-container.open.fire-active {
-    /* Adiciona uma sombra de luz laranja ao redor do livro aberto */
     box-shadow: 0 0 50px rgba(255, 120, 0, 0.7), inset 0 0 50px rgba(255, 120, 0, 0.3);
-}
-
-/* Ajustes de Z-index para garantir a ordem correta quando o livro está aberto e o fogo ativo */
-.book-container .book .page {
-    z-index: 15; /* Páginas devem estar abaixo do fogo */
-}
-.book-container .fire-container {
-    z-index: 20; /* O fogo está à frente das páginas */
 }
