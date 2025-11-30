@@ -7,11 +7,13 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
     <div class="stars-container">
         <div class="stars-layer layer-1"></div>
         <div class="stars-layer layer-2"></div>
         <div class="stars-layer layer-3"></div>
     </div>
+
     <div class="library-bg"></div>
 
     <audio id="soundPage" src="page.mp3" preload="auto"></audio>
@@ -20,17 +22,28 @@
         <button id="themeBtn" onclick="toggleTheme()">Changer d'ambiance</button>
         <button onclick="flyPages()">Faire voler les pages</button>
         <button onclick="toggleFire()">Feu</button>
+
+        <!-- Novos botões -->
+        <button onclick="magicSound()">Son magique</button>
+        <button onclick="rainbowParticles()">Particules arc-en-ciel</button>
+        <button onclick="shakeBook()">Secouer le livre</button>
+        <button onclick="resetBook()">Réinitialiser</button>
+        <button onclick="lumiere()">Lumière</button>
     </div>
 
-    <div class="book-container" id="bookContainer">
+    <div class="book-container" id="bookContainer" onclick="toggleBook()">
         <div class="book">
             <div class="page back-cover"></div>
             <div class="spine"></div>
+
             <div class="page inner-page p3">
-                <div class="page-content"><p>...et la magie commence.</p></div>
+                <div class="page-content">
+                    <p>...et la magie commence.</p>
+                </div>
             </div>
             <div class="page inner-page p2"></div>
             <div class="page inner-page p1"></div>
+
             <div class="page front-cover">
                 <div class="cover-content">
                     <h1>Le Grimoire</h1>
@@ -38,14 +51,6 @@
                 </div>
             </div>
         </div>
-    </div>
-
-    <!-- 🔥 Contêiner de fogo posicionado fora do livro -->
-    <div class="fire-container" id="fireContainer">
-        <div class="flame red-flame"></div>
-        <div class="flame orange-flame"></div>
-        <div class="flame yellow-flame"></div>
-        <div class="flame white-flame"></div>
     </div>
 
     <script src="script.js"></script>
