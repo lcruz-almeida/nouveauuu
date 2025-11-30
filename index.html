@@ -7,50 +7,45 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
     <div class="stars-container">
         <div class="stars-layer layer-1"></div>
         <div class="stars-layer layer-2"></div>
         <div class="stars-layer layer-3"></div>
     </div>
-
     <div class="library-bg"></div>
 
     <audio id="soundPage" src="page.mp3" preload="auto"></audio>
 
     <div class="controls">
         <button id="themeBtn" onclick="toggleTheme()">Changer d'ambiance</button>
-        
         <button onclick="flyPages()">Faire voler les pages</button>
-
         <button onclick="toggleFire()">Feu</button>
     </div>
 
-    <div class="book-container" id="bookContainer" onclick="toggleBook()">
-
-        <!-- 🔥 ESTE CONTAINER É O NOVO LOCAL ONDE O FOGO APARECE -->
-        <div class="fire-container"></div>
-
+    <div class="book-container" id="bookContainer">
         <div class="book">
+            <div class="fire-container" id="fireContainer">
+                <div class="fire-flame"></div>
+                <div class="fire-flame"></div>
+                <div class="fire-flame"></div>
+                <div class="fire-flame"></div>
+            </div>
+
             <div class="page back-cover"></div>
             <div class="spine"></div>
-
             <div class="page inner-page p3">
                 <div class="page-content">
                     <p>...et la magie commence.</p>
                 </div>
             </div>
-
             <div class="page inner-page p2"></div>
             <div class="page inner-page p1"></div>
-
             <div class="page front-cover">
                 <div class="cover-content">
                     <h1>Le Grimoire</h1>
                     <div class="ornament"></div>
                 </div>
             </div>
-
         </div>
     </div>
 
